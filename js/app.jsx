@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-require('.././styles/style.scss');
+require('./../styles/style.scss');
 
 class App extends React.Component {
     constructor(props) {
@@ -50,7 +50,7 @@ class App extends React.Component {
                 <header>
                     <h1>Hi,<br/>I'm Mateusz,<br/>Front-end Developer.</h1>
                     <video ref={node => this.videoNode = node} muted autoPlay playsinline loop>
-                        <source src="./../styles/videos/timelapse_video.mp4" type="video/mp4"/>
+                        <source src={require('./../styles/videos/timelapse_video.mp4')} type="video/mp4"/>
                     </video>
                     <i onClick={this.scrollToMyRef} className="arrow down"/>
                 </header>
@@ -58,16 +58,16 @@ class App extends React.Component {
                     <h2>About me</h2>
                     <p>My name is Mateusz Czechowicz and I'm Front-end Developer. I finished a course of programming JavaScript: React in Coder's Lab - the school of developers. Currently I work at Rockitworks.</p>
                     <div className="image-1">
-                        <img src="./../styles/images/desk.jpg" alt=""/>
+                        <img src={require('./../styles/images/desk.jpg')} alt=""/>
                     </div>
                     <div className="image-2">
-                        <img src="./../styles/images/pencil.jpg" alt=""/>
+                        <img src={require('./../styles/images/pencil.jpg')} alt=""/>
                     </div>
                 </section>
                 <section className="skills">
                     <h2>Skills</h2>
                     <div className="tvNoiseContain">
-                        <img src="./../styles/images/old-tv.png" alt="" className="tv"/>
+                        <img src={require('./../styles/images/old-tv.png')} alt="" className="tv"/>
                             <div className="noiseContain">
                                 <div className={this.state.turn ? "turnoff" : null} ref={ (ref) => this.animation=ref }/>
                             </div>
