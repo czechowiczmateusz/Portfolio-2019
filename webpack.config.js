@@ -4,7 +4,14 @@ module.exports = {
     output: {
         filename: "./js/out.js"
     },
+    devServer: {
+        inline: true,
+        contentBase: './',
+        port: 3001
+    },
     watch: true,
+    devtool: 'source-map',
+    
     module: {
         rules: [{
             test: /\.jsx$/,
@@ -24,8 +31,6 @@ module.exports = {
                 }
             }, {
                 loader: 'sass-loader'
-            }, {
-                loader: 'postcss-loader'
             }]
         },
             {
