@@ -188,7 +188,7 @@ class App extends React.Component {
                     </div>
                 </section>
                 <section className="skills">
-                    <h2>Skills</h2>
+                    <h2><span>S</span><span>k</span><span>i</span><span>l</span><span>l</span><span>s</span></h2>
                     <div className="tv-with-remote-control">
                         <div className="tv-container">
                             <img src={require('./../styles/images/old-tv.png')} alt="" className="tv"/>
@@ -219,7 +219,7 @@ class App extends React.Component {
                     </div>
                 </section>
                 <section className="projects">
-                    <h2>Projects</h2>
+                    <h2><span>P</span><span>r</span><span>o</span><span>j</span><span>e</span><span>c</span><span>t</span><span>s</span></h2>
                     <div className="projectsContent">
                         <div className="project project_supme">
                             <div className="project-link"><a target="_blank" href="https://www.supme.io/"><i className="fa fa-globe"/></a></div>
@@ -243,7 +243,7 @@ class App extends React.Component {
                     </div>
                 </section>
                 <footer>
-                    <h2>Contact</h2>
+                    <h2><span>C</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span></h2>
                     <div className="contactContainer">
                         <i className="fas fa-phone fa-2x"/>
                         <p><a href="tel:+48531323377">+48 531 323 377</a></p>

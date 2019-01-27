@@ -43,6 +43,9 @@ header {
       padding: 10px;
       left: 48%;
     }
+    @media only screen and (min-width: 1200px) {
+      cursor: pointer;
+    }
   }
 }
 
@@ -57,8 +60,11 @@ h2 {
     padding-top: 140px;
   }
   @media only screen and (min-width: 1026px) {
-    span:hover {
-      color: blue;
+    span {
+      transition: color 0.3s;
+      &:hover {
+        color: #ebb132;
+      }
     }
   }
   &:before {
@@ -302,6 +308,9 @@ section {
               text-decoration: none;
               box-shadow: -2em 1.5em 0 #484646;
               transition: all .25s linear;
+              @media only screen and (min-width: 1200px) {
+                cursor: pointer;
+              }
               .fa-power-off {
                 color: #990000;
               }
