@@ -150,7 +150,7 @@ const App = () => {
             </header>
             <section className="about-me" ref={aboutMe}>
                 <h2><span>A</span><span>b</span><span>o</span><span>u</span><span>t</span> <span>m</span><span>e</span></h2>
-                <p>My name is Mateusz Czechowicz and I'm Front-end Developer. I finished a course of programming JavaScript: React in Coder's Lab - the school of developers. Currently I work at Rockitworks.</p>
+                <p>My name is Mateusz Czechowicz and I'm Front-end Developer. I finished a course of programming: JavaScript: React in Coder's Lab - the school of developers. Currently I'm working at Rockitworks.</p>
                 <div className="image-desk">
                     <img src={require('./../styles/images/desk.jpg')} alt=""/>
                 </div>
