@@ -4,31 +4,26 @@ module.exports = {
     output: {
         filename: "./js/out.js"
     },
+    watch: true,
     devServer: {
         inline: true,
         contentBase: './',
         port: 3001
     },
-    watch: true,
-    devtool: 'source-map',
-    
     module: {
         rules: [{
-            test: /\.jsx$/,
+            test: /\.(js|jsx)$/,
             exclude: /node_modules/,
             loader: 'babel-loader',
             query: {
-                presets: ['es2015','stage-2', 'react']
+                presets: ['@babel/preset-env', '@babel/preset-react']
             }
         }, {
             test: /\.scss$/,
             use: [{
                 loader: 'style-loader'
             }, {
-                loader: 'css-loader',
-                options: {
-                    minimize: true
-                }
+                loader: 'css-loader'
             }, {
                 loader: 'sass-loader'
             }]
@@ -45,6 +40,10 @@ module.exports = {
                     }
                 ]
             }
-        ]
+        ],
+    },
+    resolve: {
+        extensions: ['*', '.js', '.jsx']
     }
 };
+

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import ReactDOM from "react-dom";
 require('./../styles/style.scss');
 
@@ -93,172 +93,144 @@ const data2 = {
     ]
 };
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            turnClass: "turnoff",
-            turn: true,
-            description: false
-        };
-        this.myRef=null;
-        this.animation=null
-    }
-    scrollToMyRef = () => {
+const App = () => {
+    const [turnClass, setTurnClass] = useState('turnoff');
+    const [turn, setTurn] = useState(true);
+    const [description, setDescription] = useState(false);
+    const [text, setText] = useState(null);
+    const aboutMe = useRef(null);
+
+    const scrollToAboutMe = () => {
         window.scrollTo({
-            top: this.myRef.offsetTop,
-            behavior: "smooth"
+            top: aboutMe.current.offsetTop,
+            behavior: 'smooth'
         })
     };
-    showDescription = (item) => {
-        if(this.state.description === false && !this.state.turn) {
-            this.setState({
-                description: true,
-                text: item
-            })
-        } else if(this.state.description && !this.state.turn) {
-            this.setState({
-                description: false,
-                text: null
-            });
+
+    const showDescription = item => {
+        if(description === false && !turn) {
+            setDescription(true);
+            setText(item);
+        } else if(description && !turn) {
+            setDescription(false);
+            setText(null);
             setTimeout(() => {
-                this.setState({
-                    description: true,
-                    text: item
-                });
+                setDescription(true);
+                setText(item);
             }, 100)
         } else {
-            this.setState({
-                description: false,
-                text: null
-            });
+            setDescription(false);
+            setText(null);
         }
     };
-    toggleAnimation = (e) => {
-        e.preventDefault();
-        let animation = this.animation.style;
-        if(animation.webkitAnimationPlayState === 'running') {
-            animation.webkitAnimationPlayState = 'paused';
-        } else if(animation.webkitAnimationPlayState !== 'running' && animation.webkitAnimationPlayState !== 'paused') {
-            animation.webkitAnimationPlayState = 'paused';
-        } else {
-            animation.webkitAnimationPlayState = 'running';
-        }
-        console.log(this.animation.classList);
-    };
-    turnOff = () => {
-        if(this.state.turnClass === "turnon" || this.state.turnClass === null) {
-            this.setState({
-                turn: true,
-                turnClass: "turnoff",
-                description: false,
-                text: null
-            })
-        } else {
-            this.setState({
-                turn: false,
-                turnClass: "turnon"
 
-            });
+    const turnOff = () => {
+        if(turnClass === 'turnon' || turnClass === null) {
+            setTurn(true);
+            setTurnClass('turnoff');
+            setDescription(false);
+            setText(null);
+        } else {
+            setTurn(false);
+            setTurnClass('turnon');
             setTimeout(() => {
-                this.setState({
-                    turnClass: null
-                });
+                setTurnClass(null)
             }, 300)
         }
     };
-    render(){
-        return (
-            <div>
-                <header>
-                    <h1>Hi,<br/>I'm Mateusz,<br/>Front-end<br/> Developer.</h1>
-                    <video ref={node => this.videoNode = node} muted autoPlay playsinline loop>
-                        <source src={require('./../styles/videos/timelapse_video.mp4')} type="video/mp4"/>
-                    </video>
-                    <i onClick={this.scrollToMyRef} className="arrow down"/>
-                </header>
-                <section className="about-me" ref={ (ref) => this.myRef=ref }>
-                    <h2><span>A</span><span>b</span><span>o</span><span>u</span><span>t</span> <span>m</span><span>e</span></h2>
-                    <p>My name is Mateusz Czechowicz and I'm Front-end Developer. I finished a course of programming JavaScript: React in Coder's Lab - the school of developers. Currently I work at Rockitworks.</p>
-                    <div className="image-desk">
-                        <img src={require('./../styles/images/desk.jpg')} alt=""/>
+
+    return (
+        <div>
+            <header>
+                <h1>Hi,<br/>I'm Mateusz,<br/>Front-end<br/> Developer.</h1>
+                <video muted autoPlay playsinline loop>
+                    <source src={require('./../styles/videos/timelapse_video.mp4')} type="video/mp4"/>
+                </video>
+                <i onClick={scrollToAboutMe} className="arrow down"/>
+            </header>
+            <section className="about-me" ref={aboutMe}>
+                <h2><span>A</span><span>b</span><span>o</span><span>u</span><span>t</span> <span>m</span><span>e</span></h2>
+                <p>My name is Mateusz Czechowicz and I'm Front-end Developer. I finished a course of programming JavaScript: React in Coder's Lab - the school of developers. Currently I work at Rockitworks.</p>
+                <div className="image-desk">
+                    <img src={require('./../styles/images/desk.jpg')} alt=""/>
+                </div>
+                <div className="image-pencil">
+                    <img src={require('./../styles/images/pencil.png')} alt=""/>
+                </div>
+            </section>
+            <section className="skills">
+                <h2><span>S</span><span>k</span><span>i</span><span>l</span><span>l</span><span>s</span></h2>
+                <div className="tv-with-remote-control">
+                    <div className="tv-container">
+                        <img src={require('./../styles/images/old-tv.png')} alt="" className="tv"/>
+                        <div className="tv-noise">
+                            <div className={turnClass}/>
+                        </div>
+                        <div className="tv-background"/>
+                        <div className={description ? "tv-description-turnon tv-description" : "tv-description"}><div dangerouslySetInnerHTML={{ __html: text }}/></div>
                     </div>
-                    <div className="image-pencil">
-                        <img src={require('./../styles/images/pencil.jpg')} alt=""/>
-                    </div>
-                </section>
-                <section className="skills">
-                    <h2><span>S</span><span>k</span><span>i</span><span>l</span><span>l</span><span>s</span></h2>
-                    <div className="tv-with-remote-control">
-                        <div className="tv-container">
-                            <img src={require('./../styles/images/old-tv.png')} alt="" className="tv"/>
-                            <div className="tv-noise">
-                                <div className={this.state.turnClass} ref={ (ref) => this.animation=ref }/>
-                            </div>
-                            <div className="tv-background"/>
-                            <div className={this.state.description ? "tv-description-turnon tv-description" : "tv-description"}><div dangerouslySetInnerHTML={{ __html: this.state.text }}/></div>
+                    <div className="remote-control">
+                        <div className="buttons">
+                            <ul>
+                                <li onClick={turnOff}><span className="list-item"><i className="fas fa-power-off"/></span></li>
+                                {data.SkillsList.map((item) => {
+                                    return <li onClick={() => showDescription(item.Description)}><span className="list-item"><i dangerouslySetInnerHTML={{ __html: item.Svg }} className={item.Class}/>{item.Text}</span></li>
+                                })}
+                            </ul>
                         </div>
-                        <div className="remote-control">
-                            <div className="buttons">
-                                <ul>
-                                    <li onClick={this.turnOff}><span className="list-item"><i className="fas fa-power-off"/></span></li>
-                                    {data.SkillsList.map((item) => {
-                                        return <li onClick={() => this.showDescription(item.Description)}><span className="list-item"><i dangerouslySetInnerHTML={{ __html: item.Svg }} className={item.Class}/>{item.Text}</span></li>
-                                    })}
-                                </ul>
-                            </div>
-                            <div className="buttons">
-                                <ul>
-                                    <li><span className="list-item"><i/></span></li>
-                                    {data2.SkillsList.map((item) => {
-                                        return <li onClick={() => this.showDescription(item.Description)}><span className="list-item"><i dangerouslySetInnerHTML={{ __html: item.Text }} className={item.Class}/></span></li>
-                                    })}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="projects">
-                    <h2><span>P</span><span>r</span><span>o</span><span>j</span><span>e</span><span>c</span><span>t</span><span>s</span></h2>
-                    <div className="projectsContent">
-                        <div className="project project_supme">
-                            <div className="project-link"><a target="_blank" href="https://www.supme.io/"><i className="fa fa-globe"/></a></div>
-                            <div className="project project-background"/>
-                        </div>
-                        <div className="project project_film-search-app">
-                            <div className="project-link"><a target="_blank" href="https://github.com/czechowiczmateusz/Film-search-app"><i className="fab fa-github"/></a></div>
-                            <div className="project-link"><a target="_blank" href="https://czechowiczmateusz.github.io/Film-search-app/"><i className="fa fa-globe"/></a></div>
-                            <div className="project project-background"/>
-                        </div>
-                        <div className="project project_sit-on-chair">
-                            <div className="project-link"><a target="_blank" href="https://github.com/czechowiczmateusz/Sit-on-chair"><i className="fab fa-github"/></a></div>
-                            <div className="project-link"><a target="_blank" href="https://czechowiczmateusz.github.io/Sit-on-chair/"><i className="fa fa-globe"/></a></div>
-                            <div className="project project-background"/>
-                        </div>
-                        <div className="project project_sortable-table">
-                            <div className="project-link"><a target="_blank" href="https://github.com/czechowiczmateusz/Sortable-table"><i className="fab fa-github"/></a></div>
-                            <div className="project-link"><a target="_blank" href="https://czechowiczmateusz.github.io/Sortable-table/"><i className="fa fa-globe"/></a></div>
-                            <div className="project project-background"/>
+                        <div className="buttons">
+                            <ul>
+                                <li><span className="list-item"><i/></span></li>
+                                {data2.SkillsList.map((item) => {
+                                    return <li onClick={() => showDescription(item.Description)}><span className="list-item"><i dangerouslySetInnerHTML={{ __html: item.Text }} className={item.Class}/></span></li>
+                                })}
+                            </ul>
                         </div>
                     </div>
-                </section>
-                <footer>
-                    <h2><span>C</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span></h2>
-                    <div className="contactContainer">
-                        <i className="fas fa-phone fa-2x"/>
-                        <p><a href="tel:+48531323377">+48 531 323 377</a></p>
-                        <i className="far fa-envelope fa-2x"/>
-                        <p><a href="mailto:matic1.czechowicz@gmail.com">matic1.czechowicz@gmail.com</a></p>
-                        <i className="fab fa-github fa-2x"/>
-                        <p><a target="_blank"  href="https://github.com/czechowiczmateusz/">https://github.com/czechowiczmateusz/</a></p>
-                        <i className="fab fa-linkedin-in fa-2x"/>
-                        <p><a target="_blank"  href="https://www.linkedin.com/in/mczechowicz/">https://www.linkedin.com/in/mczechowicz/</a></p>
+                </div>
+            </section>
+            <section className="projects">
+                <h2><span>P</span><span>r</span><span>o</span><span>j</span><span>e</span><span>c</span><span>t</span><span>s</span></h2>
+                <div className="projectsContent">
+                    <div className="project project_supme">
+                        <div className="project-link"><a target="_blank" href="https://www.supme.io/"><i className="fa fa-globe"/></a></div>
+                        <div className="project project-background"/>
                     </div>
-                </footer>
-            </div>
-        )
-    }
-}
+                    <div className="project project_film-search-app">
+                        <div className="project-link"><a target="_blank" href="https://github.com/czechowiczmateusz/Film-search-app"><i className="fab fa-github"/></a></div>
+                        <div className="project-link"><a target="_blank" href="https://czechowiczmateusz.github.io/Film-search-app/"><i className="fa fa-globe"/></a></div>
+                        <div className="project project-background"/>
+                    </div>
+                    <div className="project project_sit-on-chair">
+                        <div className="project-link"><a target="_blank" href="https://github.com/czechowiczmateusz/Sit-on-chair"><i className="fab fa-github"/></a></div>
+                        <div className="project-link"><a target="_blank" href="https://czechowiczmateusz.github.io/Sit-on-chair/"><i className="fa fa-globe"/></a></div>
+                        <div className="project project-background"/>
+                    </div>
+                    <div className="project project_sortable-table">
+                        <div className="project-link"><a target="_blank" href="https://github.com/czechowiczmateusz/Sortable-table"><i className="fab fa-github"/></a></div>
+                        <div className="project-link"><a target="_blank" href="https://czechowiczmateusz.github.io/Sortable-table/"><i className="fa fa-globe"/></a></div>
+                        <div className="project project-background"/>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <h2><span>C</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span></h2>
+                <div className="contactContainer">
+                    <i className="fas fa-phone fa-2x"/>
+                    <p><a href="tel:+48531323377">+48 531 323 377</a></p>
+                    <i className="far fa-envelope fa-2x"/>
+                    <p><a href="mailto:matic1.czechowicz@gmail.com">matic1.czechowicz@gmail.com</a></p>
+                    <i className="fab fa-github fa-2x"/>
+                    <p><a target="_blank"  href="https://github.com/czechowiczmateusz/">https://github.com/czechowiczmateusz/</a></p>
+                    <i className="fab fa-linkedin-in fa-2x"/>
+                    <p><a target="_blank"  href="https://www.linkedin.com/in/mczechowicz/">https://www.linkedin.com/in/mczechowicz/</a></p>
+                </div>
+            </footer>
+        </div>
+    )
+};
+
+
 
 document.addEventListener("DOMContentLoaded",function(){
     ReactDOM.render(
